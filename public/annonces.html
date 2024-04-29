@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="fr" ng-app="AnnonceApp">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Annonces</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+    <script src="templates.js"></script>
+    <!-- Ajout de la référence au CSS dans le <head> -->
+    <link rel="stylesheet" href="/style.css">
+
+</head>
+
+<body class="body-annonces" ng-controller="AnnonceController">
+    <div class="head-content">
+        <h1>Toutes nos motos</h1>
+        <div class="container-top">
+            <p>Bienvenue, {{ username }} !</p>
+            <button class="bouton-deco" ng-click="deconnexion()">Déconnexion</button>
+        </div>
+    </div>
+    <div class="container-annonces">
+        <annonce-card ng-repeat="annonce in annonces" annonce="annonce"></annonce-card>
+    </div>
+    <a href="apropos.html">À propos</a>
+</body>
+
+</html>
