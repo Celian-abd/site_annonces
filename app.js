@@ -3,9 +3,18 @@ const session = require('express-session');
 const db = require('./utils/sqlConnection');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
+const https = require('https');
+const fs = require('fs');
+const path = require('path');
 
 const app = express();
 const PORT = 3000;
+
+// Chemins vers votre clé privée et certificat
+const privateKey = fs.readFileSync(path.join(__dirname, 'certs', 'key.pem'), 'utf8');
+const certificate = fs.readFileSync(path.join(__dirname, 'certs', 'cert.pem'), 'utf8');
+
+const credentials = { key: privateKey, cert: certificate };
 
 //Middleware
 app.use(express.static('public'));
@@ -112,6 +121,9 @@ app.post('/api/username', (req, res) => {
     }
 });
 
-app.listen(PORT, () => {
-    console.log(`Serveur démarré sur le port ${PORT}`);
+// Création du serveur HTTPS
+const httpsServer = https.createServer(credentials, app);
+
+httpsServer.listen(3000, () => {
+  console.log('HTTPS Server running on port 3000');
 });
